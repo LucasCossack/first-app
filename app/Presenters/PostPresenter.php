@@ -15,8 +15,14 @@ class PostPresenter extends Nette\Application\UI\Presenters
 		$this->database = $database;
 	}
 
-	public function renderShow(int $postId): void //tato metoda vyžaduje jeden argument - ID jednoho konkrétního článku
+	public function renderShow(int $postId): void
 	{
-		$this->template->post = $this->database->table('posts')->get($postId);
+	$post = $this->database->table('posts')->get($postId);
+	if (!$post) {
+		$this->error('Stránka nebyla nalezena'); //chybová hláška, pokud příspěvek nebyl nalezen
 	}
+
+	$this->template->post = $post;
+	}
+
 }
