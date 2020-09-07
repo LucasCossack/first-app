@@ -8,7 +8,9 @@
 
 <div class="post">{$post->content}</div> {*zobrazuje celý obsah jednoho konkrétního příspěvku*}
 
-<h2>Vložte nový příspěvek</h2>
+<a n:href="edit $post->id">Upravit příspěvek</a> {*vložíme přímo pod článek odkaz, který nám umožní editovat články a změny uložit do databáze*}
+
+<h2>Vložte nový komentář</h2>
 
 {control commentForm} {*vykreslení formuláře na stránce*}
 

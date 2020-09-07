@@ -73,11 +73,27 @@ class PostPresenter extends Nette\Application\UI\Presenter
 		return $form;
 	}
 
-	public function postFormSucceeded(Form $form, array $values): void //metoda získá data z formuláře, vloží je do databáze, vytvoří zprávu pro uživatele o úspěšném vložení příspěvku a okamžitě přesměruje na stránku s novým příspěvkem, abychom si ho hned mohli prohlédnout
+	public function postFormSucceeded(Form $form, array $values): void
 	{
-		$post = $this->database->table('posts')->insert($values);
+		$postId = $this->getParameter('postId');
 
-		$this->flashMessage("Příspěvek byl úspěšně publikován.", 'success');
+		if ($postId) { //pokud je k dispozici parametr postId, tak to znamená, že budeme upravovat příspěvek. Ověříme, zda článek opravdu existuje a pokud ano -> aktualizujeme, pokud ne -> přidá se do databáze nový příspěvek
+			$post = $this->database->table('posts')->get($postId);
+			$post->update($values); // aktualizujeme již přidaný příspěvek
+		} else {
+			$post = $this->database->table('posts')->insert($values); //else - nový příspěvek
+		}
+
+		$this->flashMessage('Příspěvek byl úspěšně publikován.', 'success');
 		$this->redirect('show', $post->id);
+	}
+
+	public function actionEdit(int $postId): void //metoda se nejmenuje renderEdit, ale actionEdit. Render metody se používají pro vložení do šablon, action metody toho mohou dělat více
+	{
+		$post = $this->database->table('posts')->get($postId);
+		if (!$post) {
+			$this->error('Příspěvek nebyl nalezen');
+		}
+		$this['postForm']->setDefaults($post->toArray());
 	}
 }
