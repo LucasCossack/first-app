@@ -39,7 +39,24 @@ class PostPresenter extends Nette\Application\UI\Presenter
 
 		$form->addSubmit('send', 'Publikovat komentář'); //<input type="submit">
 
+		$form->onSuccess[] = [$this, 'commentFormSucceeded']; //tento řádek nám říká, že pokud bude formulář úspěšně odeslán, tak zavolej metodu commentFormSucceeded z aktuálního presenteru
+
 		return $form;
+	}
+
+	public function commentFormSucceeded(Form $form, \stdClass $values): void //hodnoty odeslané ve formuláři získáme ve $values
+	{
+		$postId = $this->getParameter('postId');
+
+		$this->database->table('comments')->insert([ //vložení (uložení) získaných dat do databázové tabulky "comments" ve formátu, který vidíme v poli
+			'post_id' => $postId,
+			'name' => $values->name,
+			'email' => $values->email,
+			'content' => $values->content,
+		]);
+
+		$this->flashMessage('Děkuji za komentář', 'success'); //metoda flashMessage informuje uživatele o výsledku operace, flash zprávy jsou vykreslovány v hlavní šabloně @layout.latte
+		$this->redirect('this'); //přesměrování zpět na aktuální stránku, vhodné po každém odeslání formuláře, abychom se vyhnuli hlášce "Chcete odeslat formulář znovu?"
 	}
 
 }
