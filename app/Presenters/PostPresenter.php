@@ -22,7 +22,8 @@ class PostPresenter extends Nette\Application\UI\Presenter
 			$this->error('Stránka nebyla nalezena'); //chybová hláška, pokud příspěvek nebyl nalezen
 		}
 
-	$this->template->post = $post;
+		$this->template->post = $post;
+		$this->template->comments = $post->related('comment')->order('created_at');//nyní zde chceme iterovat přes všechny komentáře, které mají hodnotu sloupce post_id shodnou s $post->id
 	}
 
 	protected function createComponentCommentForm(): Form //Nakonfigurujeme zde formulář pro vložení komentářů, který potom vykreslíme v šabloně (zobrazíme na webu)

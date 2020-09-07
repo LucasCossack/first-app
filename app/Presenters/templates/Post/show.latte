@@ -10,4 +10,16 @@
 
 <h2>Vložte nový příspěvek</h2>
 
-{control commentForm}
+{control commentForm} {*vykreslení formuláře na stránce*}
+
+<h2>Komentáře</h2>
+
+<div class="comments"> {*n:tag-if="$comment->email" znamená, že pokud uživatel uvedl před odesláním komentáře svůj email, komentář se na stránce vykreslí s jeho jménem jako odkazem. Pokud email neuvedl, na jeho nick nepůjde kliknout*}
+    {foreach $comments as $comment} 
+        <p><b><a href="mailto:{$comment->email}" n:tag-if="$comment->email">{$comment->name}</a></b> napsal: </p>
+        <div>{$comment->content}</div>
+    {/foreach}
+</div>
+
+
+
