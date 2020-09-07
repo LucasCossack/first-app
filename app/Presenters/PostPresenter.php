@@ -5,7 +5,7 @@ namespace App\Presenters; //POZOR na uvedení správného namespacu!
 use Nette;
 use Nette\Application\UI\Form;
 
-class PostPresenter extends Nette\Application\UI\Presenters
+class PostPresenter extends Nette\Application\UI\Presenter
 {
 	/** @var Nette\Database\Context */
 	private $database;
@@ -17,10 +17,10 @@ class PostPresenter extends Nette\Application\UI\Presenters
 
 	public function renderShow(int $postId): void
 	{
-	$post = $this->database->table('posts')->get($postId);
-	if (!$post) {
-		$this->error('Stránka nebyla nalezena'); //chybová hláška, pokud příspěvek nebyl nalezen
-	}
+		$post = $this->database->table('posts')->get($postId);
+		if (!$post) {
+			$this->error('Stránka nebyla nalezena'); //chybová hláška, pokud příspěvek nebyl nalezen
+		}
 
 	$this->template->post = $post;
 	}
