@@ -11,7 +11,7 @@
 <body>
 	<div n:foreach="$flashes as $flash" n:class="flash, $flash->type">{$flash->message}</div>
 
-	{include content}
+	{include content} <!--Vkládá do hlavní šablony blok s názvem content, definuje se v šablonách jednotlivých VIEWs -->
 
 	{block scripts}
 	<script src="https://nette.github.io/resources/js/3/netteForms.min.js"></script>

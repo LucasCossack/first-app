@@ -1,4 +1,4 @@
-{block content}
+{block content} {*Tímto se nadefinuje blok content, který se převezme do hlavního layoutu - tedy @layout.latte*}
 	<h1 n:block="title">My blog</h1>
 
 	<div n:foreach="$posts as $post" class="post">
@@ -10,6 +10,6 @@
 </div>
 
 <h2><a n:href="Post:show $post->id">{$post->title}</a></h2>
+{*Hello world nahradíme tímto blokem kódu - po refreshi prohlížeče se nám zobrazí výpis všech příspěvků v databázi*}
 
-	
 {/block}
