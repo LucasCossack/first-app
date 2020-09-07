@@ -39,7 +39,6 @@ class PostPresenter extends Nette\Application\UI\Presenter
 			->setRequired();
 
 		$form->addSubmit('send', 'Publikovat komentář'); //<input type="submit">
-
 		$form->onSuccess[] = [$this, 'commentFormSucceeded']; //tento řádek nám říká, že pokud bude formulář úspěšně odeslán, tak zavolej metodu commentFormSucceeded z aktuálního presenteru
 
 		return $form;
@@ -60,4 +59,25 @@ class PostPresenter extends Nette\Application\UI\Presenter
 		$this->redirect('this'); //přesměrování zpět na aktuální stránku, vhodné po každém odeslání formuláře, abychom se vyhnuli hlášce "Chcete odeslat formulář znovu?"
 	}
 
+	protected function createComponentPostForm(): Form //Vytvoření formuláře pro ukládání příspěvků
+	{
+		$form = new Form; //stejná funkčnost jako při vytváření komentářů, akorát zde pro přidávání článků na samostatné stránce
+		$form->addText('title', 'Titulek:')
+			->setRequired();
+		$form->addTextArea('content', 'Obsah:')
+			->setRequired();
+
+		$form->addSubmit('send', 'Uložit a publikovat');
+		$form->onSuccess[] = [$this, 'postFormSucceeded'];
+
+		return $form;
+	}
+
+	public function postFormSucceeded(Form $form, array $values): void //metoda získá data z formuláře, vloží je do databáze, vytvoří zprávu pro uživatele o úspěšném vložení příspěvku a okamžitě přesměruje na stránku s novým příspěvkem, abychom si ho hned mohli prohlédnout
+	{
+		$post = $this->database->table('posts')->insert($values);
+
+		$this->flashMessage("Příspěvek byl úspěšně publikován.", 'success');
+		$this->redirect('show', $post->id);
+	}
 }
