@@ -6,6 +6,8 @@
 
 <h1 n:block="title">{$post->title}</h1> {*v titulku stránky se díky tomu zobrazí název právě čteného příspěvku - pouze za pomoci n:block="title", "title block" již existuje v @layout.latte*}
 
-<div class="post">{$post->content}</div> {*zobrazuje celý obsah jednoho konkrétního příspěvku}
+<div class="post">{$post->content}</div> {*zobrazuje celý obsah jednoho konkrétního příspěvku*}
 
-{/block}
+<h2>Vložte nový příspěvek</h2>
+
+{control commentForm}

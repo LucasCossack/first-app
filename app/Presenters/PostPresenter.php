@@ -25,4 +25,21 @@ class PostPresenter extends Nette\Application\UI\Presenter
 	$this->template->post = $post;
 	}
 
+	protected function createComponentCommentForm(): Form //Nakonfigurujeme zde formulář pro vložení komentářů, který potom vykreslíme v šabloně (zobrazíme na webu)
+	{
+		$form = new Form; // je Nette\Application\UI\Form, vytvoření nové instance komponenty Form
+
+		$form->addText('name', 'Jméno:') //vykreslí se jako <input type="text" name="name" s <label>Jméno</label>
+			->setRequired();
+
+		$form->addEmail('email', 'E-mail:'); //to samé pro emailovou adresu
+
+		$form->addTextArea('content', 'Komentář:') //vykreslí se jako pole pro psaní komentu
+			->setRequired();
+
+		$form->addSubmit('send', 'Publikovat komentář'); //<input type="submit">
+
+		return $form;
+	}
+
 }
