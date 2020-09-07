@@ -17,7 +17,7 @@ class HomepagePresenter extends Nette\Application\UI\Presenter
 		$this->database = $database;
 	}
 
-	public function renderDefault(): void
+	public function renderDefault(): void //metoda render slouží k vykreslení k poslání příspěvků z databáze do šablony, která je následně vykreslí jako HTML kód
 {
 	$this->template->posts = $this->database->table('posts')
 		->order('created_at DESC')
