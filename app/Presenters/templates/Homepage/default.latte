@@ -8,8 +8,8 @@
 
 	<div>{$post->content}</div>
 </div>
-
-<h2><a n:href="Post:show $post->id">{$post->title}</a></h2>
+<h2><a href="{link Post:show $post->id}"{$post->title}</a></h2>
+{*<h2><a n:href="Post:show $post->id">{$post->title}</a></h2> - zkrácený zápis bez link*}
 {*Hello world nahradíme tímto blokem kódu - po refreshi prohlížeče se nám zobrazí výpis všech příspěvků v databázi*}
 
 {/block}
