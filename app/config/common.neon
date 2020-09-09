@@ -19,3 +19,4 @@ security:
 
 services:
 	router: App\Router\RouterFactory::createRouter
+	- App\Model\ArticleManager

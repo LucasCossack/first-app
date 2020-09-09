@@ -1,26 +1,23 @@
 <?php
 
-declare(strict_types=1);
-
-namespace App\Presenters;
+namespace App\Presenters; //HomepagePresenter jsme zde upravili tak, abychom se zbavili závislosti na Nette\Database\Context a použijeme závislost na naší nové třídě
 
 use Nette;
+use App\Model\ArticleManager;
 
 
 class HomepagePresenter extends Nette\Application\UI\Presenter
 {
-	/** @var Nette\Database\Context */
-	private $database;
+	/** @var ArticleManager */
+	private $articleManager;
 
-	public function __construct(Nette\Database\Context $database)
+	public function __construct(ArticleManager $articleManager) // Pomocí constructoru si požádáme o ArticleManager, který si přidáme do vlastnosti $articleManager
 	{
-		$this->database = $database;
+		$this->articleManager = $articleManager;
 	}
 
-	public function renderDefault(): void //metoda render slouží k vykreslení k poslání příspěvků z databáze do šablony, která je následně vykreslí jako HTML kód
-{
-	$this->template->posts = $this->database->table('posts')
-		->order('created_at DESC')
-		->limit(5);
-}
+	public function renderDefault(): void
+	{
+		$this->template->posts = $this->articleManager->getPublicArticles()->limit(5); // zavolání metody getPublicArticles(), navíc zavoláme ještě metodu limit(5)
+	}
 }
