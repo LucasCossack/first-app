@@ -37,3 +37,28 @@ form .error {
 	color: #D00;
 	font-weight: bold;
 }
+
+.button{
+	border-radius: 50px;
+	padding: 10px 20px;
+	background-color: black;
+	cursor: pointer;
+	color: white;
+}
+
+.button:hover{
+	background-color: red;
+}
+
+li{
+	list-style: none;
+}
+
+a{
+	text-decoration: none;
+	border-radius: 50px;
+	padding: 10px 20px;
+	background-color: black;
+	cursor: pointer;
+	color: white;
+}

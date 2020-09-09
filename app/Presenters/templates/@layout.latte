@@ -7,7 +7,14 @@
 	<title>{ifset title}{include title|stripHtml} | {/ifset}Nette Web</title>
 	<link rel="stylesheet" href="{$basePath}/css/style.css">
 </head>
-
+<ul class="navig">
+	<p><li><a n:href="Homepage:">Články</a></li></p>
+	{if $user->loggedIn}
+		<li><a n:href="Sign:out">Odhlásit</a></li>
+	{else}
+		<li><a n:href="Sign:in">Přihlásit</a></li>
+	{/if}
+</ul>
 <body>
 	<div n:foreach="$flashes as $flash" n:class="flash, $flash->type">{$flash->message}</div> {*vykreslení informativní zprávy pro uživatele - např. po úspěšném odeslání formuláře*}
 

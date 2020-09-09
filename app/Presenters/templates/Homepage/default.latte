@@ -1,4 +1,5 @@
 {block content} {*Tímto se nadefinuje blok content, který se převezme do hlavního layoutu - tedy @layout.latte*}
+	<a n:href="Post:create" n:if="$user->loggedIn">Vytvořit nový článek</a> {*přidání odkazu na homepage*}
 	<h1 n:block="title">My blog</h1>
 
 	<div n:foreach="$posts as $post" class="post">
@@ -13,6 +14,4 @@
 <h2><a n:href="Post:show $post->id">{$post->title}</a></h2> {*zkrácený zápis zakomentovaného <h2> bez link*}
 
 {*Hello world nahradíme tímto blokem kódu - po refreshi prohlížeče se nám zobrazí výpis všech příspěvků v databázi*}
-
-<a n:href="Post:create">Napsat nový příspěvek</a> {*přidání odkazu na homepage*}
 {/block}

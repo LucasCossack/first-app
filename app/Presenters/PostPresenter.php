@@ -75,6 +75,10 @@ class PostPresenter extends Nette\Application\UI\Presenter
 
 	public function postFormSucceeded(Form $form, array $values): void
 	{
+		if (!$this->getUser()->isLoggedIn()) {
+			$this->error('Pro vytvoření, nebo editování příspěvku se musíte přihlásit.');
+		}
+
 		$postId = $this->getParameter('postId');
 
 		if ($postId) { //pokud je k dispozici parametr postId, tak to znamená, že budeme upravovat příspěvek. Ověříme, zda článek opravdu existuje a pokud ano -> aktualizujeme, pokud ne -> přidá se do databáze nový příspěvek
@@ -90,10 +94,21 @@ class PostPresenter extends Nette\Application\UI\Presenter
 
 	public function actionEdit(int $postId): void //metoda se nejmenuje renderEdit, ale actionEdit. Render metody se používají pro vložení do šablon, action metody toho mohou dělat více
 	{
+		if (!$this->getUser()->isLoggedIn()) {
+			$this->redirect('Sign:in');
+		}
+
 		$post = $this->database->table('posts')->get($postId);
 		if (!$post) {
 			$this->error('Příspěvek nebyl nalezen');
 		}
 		$this['postForm']->setDefaults($post->toArray());
+	}
+
+	public function actionCreate(): void
+	{
+		if (!$this->getUser()->isLoggedIn()) { // slouží k zabezpečení vytváření nových článků -> povolí pouze přihlášeným, pokud nikdo není přihlášen, nabídne formulář s přihlášením
+			$this->redirect('Sign:in');
+		}
 	}
 }

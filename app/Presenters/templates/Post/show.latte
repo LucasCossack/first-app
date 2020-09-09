@@ -8,7 +8,9 @@
 
 <div class="post">{$post->content}</div> {*zobrazuje celý obsah jednoho konkrétního příspěvku*}
 
-<a n:href="edit $post->id">Upravit příspěvek</a> {*vložíme přímo pod článek odkaz, který nám umožní editovat články a změny uložit do databáze*}
+<p><a n:href="edit $post->id" n:if="$user->loggedIn">Upravit aktuální příspěvek</a></p> {*vložíme přímo pod článek odkaz, který nám umožní editovat články a změny uložit do databáze*}
+
+<a n:href="Post:create" n:if="$user->loggedIn">Vytvořit nový článek</a> {*vytvoření nového článku bude viditelné a možné pouze pro přihlášeného uživatele*}
 
 <h2>Vložte nový komentář</h2>
 
