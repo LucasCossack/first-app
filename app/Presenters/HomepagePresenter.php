@@ -16,8 +16,13 @@ class HomepagePresenter extends Nette\Application\UI\Presenter
 		$this->articleManager = $articleManager;
 	}
 
-	public function renderDefault(): void
+	public function renderDefault($page = 1)
 	{
-		$this->template->posts = $this->articleManager->getPublicArticles()->limit(5); // zavolání metody getPublicArticles(), navíc zavoláme ještě metodu limit(5)
+		$posts = $this->articleManager->findPublishedArticles();
+		$lastPage = 0;
+		$this->template->posts = $posts->page($page, 5, $lastPage);
+		 
+		$this->template->page = $page;
+ 		$this->template->lastPage = $lastPage;
 	}
 }

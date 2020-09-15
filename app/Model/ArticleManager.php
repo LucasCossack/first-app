@@ -16,10 +16,10 @@ class ArticleManager
 		$this->database = $database;
 	}
 
-	public function getPublicArticles()
+	public function findPublishedArticles()
 	{
 		return $this->database->table('posts')
 			->where('created_at < ', new \DateTime)
-			->order('created_at DESC');
+			->order('created_at ASC');
 	}
 }

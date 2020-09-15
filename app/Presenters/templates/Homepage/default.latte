@@ -1,17 +1,33 @@
 {block content} {*Tímto se nadefinuje blok content, který se převezme do hlavního layoutu - tedy @layout.latte*}
+
+<div class="pagination"> {*vykreslení možnosti listování - projíždění stránek, na kterých je seznam se všemi články*}
+	{if $page > 1}
+		<a n:href="default, 1">První</a>
+		&nbsp;|&nbsp;
+		<a n:href="default, $page-1">Předchozí</a>
+		&nbsp;|&nbsp;
+	{/if}
+	Stránka {$page} z {$lastPage}
+	{if $page < $lastPage}
+		&nbsp;|&nbsp;
+		<a n:href="default, $page+1">Další</a>
+		&nbsp;|&nbsp;
+		<a n:href="default, $lastPage">Poslední</a>
+	{/if}
+</div>
 	<a n:href="Post:create" n:if="$user->loggedIn">Vytvořit nový článek</a> {*přidání odkazu na homepage*}
 	<h1 n:block="title">My blog</h1>
 
 	<div n:foreach="$posts as $post" class="post">
 	<div class="date">{$post->created_at|date:'F j, Y'}</div>
 
-	<h2>{$post->title}</h2>
+	<h2><a n:href="Post:show $post->id">{$post->title}</a></h2>
 
 	<div>{$post->content}</div>
 </div>
 {*<h2><a href="{link Post:show $post->id}"{$post->title}</a></h2>*}
 
-<h2><a n:href="Post:show $post->id">{$post->title}</a></h2> {*zkrácený zápis zakomentovaného <h2> bez link*}
+{*<h2><a n:href="Post:show $post->id">{$post->title}</a></h2> {*zkrácený zápis zakomentovaného <h2> bez link*}
 
 {*Hello world nahradíme tímto blokem kódu - po refreshi prohlížeče se nám zobrazí výpis všech příspěvků v databázi*}
 {/block}
